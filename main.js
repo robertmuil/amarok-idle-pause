@@ -38,6 +38,19 @@ function dbg(dbg_txt) {
 	aa = new QListWidgetItem(dbg_txt);
 
 	dbgWin.dbgList.addItem(aa);
+
+	Amarok.Window.Statusbar.longMessage("POIDbg: " + dbg_txt);
+
 }
 
+function tracks()
+{
+	dbg(Amarok.Playlist.totalTrackCount() + " tracks in playlist");
+}
+
+Amarok.Playlist.trackInserted.connect(tracks);
+Amarok.Playlist.trackRemoved.connect(tracks);
+
 dbg("Ok, we've started!")
+
+
