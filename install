@@ -1,0 +1,4 @@
+#!/bin/bash
+#TODO: determine dir properly?
+scriptdir="$HOME/.kde/share/apps/amarok/scripts"
+ln -vs "$PWD" "$scriptdir"
