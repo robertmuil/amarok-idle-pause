@@ -45,17 +45,25 @@ function dbg(dbg_txt) {
 
 	dbgWin.dbgList.addItem(aa);
 	dbgWin.dbgList.scrollToBottom();
+}
 
-	Amarok.Window.Statusbar.shortMessage("POIDbg: " + dbg_txt);
-
+function uiOut(txt) {
+	dbg(txt)
+	Amarok.Window.Statusbar.longMessage(txt);
 }
 
 function timedAlert(interval) {
 	var qo = new QTimer();
 	qo.timeout.connect(function(qevent) {
 		secondsUntilPause -= 1;
-		msg = 'Time-out: ' + secondsUntilPause + ' seconds until pause.';
+		msg = 'Idle time-out: ' + secondsUntilPause + ' seconds until pause.';
 		dbg(msg)
+
+		if (secondsUntilPause <= 120) {
+			if ((secondsUntilPause % 15)==0) {
+				uiOut('NB: '+msg)
+			}
+		}
 
 		if (secondsUntilPause <= 0) {
 			Amarok.Engine.Pause();
