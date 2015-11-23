@@ -2,9 +2,15 @@ Importer.loadQtBinding( "qt.core" );
 Importer.loadQtBinding( "qt.gui" );
 Importer.loadQtBinding( "qt.uitools" );
 
-Amarok.debug("script started");
 
-SecondsUntilPause = 2*60*60; //1 hour
+/* START Parameters */
+// TODO: work out how to add these to Amarok as user-configurable parameters
+SecondsUntilPause = 2*60*60; //2 hours
+DbgLvl = 0 // set to > 0 to enable debugging window
+
+/* END Parameters */
+
+Amarok.debug("script started");
 
 secondsUntilPause = SecondsUntilPause;
 
@@ -33,18 +39,19 @@ function POIDbgWin()
 	this.show();
 }
 
-POIDbgWin.prototype = new QMainWindow();
-
-dbgWin = new POIDbgWin();
-
+if (DbgLvl > 0) {
+	POIDbgWin.prototype = new QMainWindow();
+	dbgWin = new POIDbgWin();
+}
 function dbg(dbg_txt) {
 
-	Amarok.debug(dbg_txt)
+	Amarok.debug(dbg_txt);
 
-	aa = new QListWidgetItem(dbg_txt);
-
-	dbgWin.dbgList.addItem(aa);
-	dbgWin.dbgList.scrollToBottom();
+	if (DbgLvl > 0) {
+		aa = new QListWidgetItem(dbg_txt);
+		dbgWin.dbgList.addItem(aa);
+		dbgWin.dbgList.scrollToBottom();
+	}
 }
 
 function uiOut(txt) {
